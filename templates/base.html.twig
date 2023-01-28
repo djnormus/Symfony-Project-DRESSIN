@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	
+	<title>
+		{% block title %}DressIn |
+		{% endblock %}
+	</title>
+	<link rel="icon"
+		href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+	{# BootstrapWatch #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.1/lux/bootstrap.min.css"
+		integrity="sha512-mOju8pKJzu/lzzsmSWS8MrvFTXE9JMdOmhsz4OzN4NNfkERAUt4M7qjVQTbrWpx5SAJCv6Z2mrGY20ta6W2n+Q=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	{# FONTAWESOME #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+	{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	{% endblock %}
+
+	{% block javascripts %}
+	{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+</head>
+
+<body>
+
+	{########### NAVBAR ##################}
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-5">
+		<div class="container">
+			<a class="navbar-brand" href=" {{ path('home')}} ">DressIn</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+				aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation"></button>
+
+			<div class="collapse navbar-collapse" id="navbarColor03">
+				<ul class="navbar-nav me-auto">
+					{##### CONDITION AFFICHAGE MENU LOGIN/LOGOUT ######}
+					{% if not app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('login') }}"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="{{ path('register') }}"><i
+								class="fas fa-user-edit"></i> Inscription</a>
+					</li>
+					{% endif %}
+					{############ FIN CONDITION #############}
+					<li class="nav-item">
+						<a class="nav-link" href=" {{ path('emailForm') }} "><i class="fas fa-envelope"></i> Nous
+							contacter</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href=" {{ path('cart') }} ">
+							<i class="fas fa-shopping-cart"></i>
+							Panier</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" href="#"> </a>
+					</li>
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+							aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-tools"></i>
+							Gestion</a>
+						<div class="dropdown-menu">
+							{##### CONDITION 1 : AFFICHAGE MENU ADMIN ######}
+							{% if app.user and is_granted('ROLE_ADMIN') %}
+							<a class="dropdown-item" href="{{ path('listProduct') }}">Accès Back-Office</a>
+							{% endif %}
+							{% if app.user %}
+							<a class="dropdown-item" href=" {{ path('profil') }} "><i class="fas fa-user"></i> Mon profil</a>
+							{% endif %}
+							<a class="dropdown-item" href="#"></a>
+							{##### CONDITION 2 : AFFICHAGE MENU USER #######}
+							{% if app.user %}
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{ path('logout') }}">
+								<i class="fas fa-sign-out-alt"></i>
+								Déconnexion</a>
+							{% endif %}
+							{############ FIN DES CONDITIONS ##############}
+						</div>
+					</li>
+				</ul>
+				<form class="d-flex">
+					<input class="form-control me-sm-2" type="text" placeholder="Recherche...">
+					<button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+						<i class="fas fa-search"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	{########### FIN NAVBAR ##################}
+
+	<div class="container">
+		<div class="row mt-3 text-center">
+			<h1 class="my-3"> {% block titre %}{% endblock %}</h1>
+		</div>
+
+		{########## BOUCLE POUR L'AFFICHAGE MESSAGES : ERROR & SUCCESS #########}
+		<div class="mx-auto col-lg-6 pb-1">
+			{% for message in app.flashes('success') %}
+			<div class="alert alert-success text-center mx-auto">{{ message }}</div>
+			{% endfor %}
+
+			{% for message in app.flashes('danger') %}
+			<div class="alert alert-danger text-center mx-auto">{{ message }}</div>
+			{% endfor %}
+		</div>
+		{############## FIN BOUCLE ##################}
+
+		{% block body %}{% endblock %}
+	</div>
+
+
+
+
+	
+	{####### SCRIPT JS Bootstrap ###########}
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	{# IONICONS SCRIPT #}
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

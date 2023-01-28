@@ -1,0 +1,58 @@
+
+
+
+actions liées aux filtre
+
+
+sur le catalogue on a un filtre clickable par section (gender en BDD sur product)
+
+
+l'utilisateur click sur une de ces 3 sections (femme, homme, enfant)
+donc notre utilisateur souhaite accéder aux produits liés à cette section
+=>   findBy(gender=>sectioncliqué(passée en param dans l'url))
+
+
+l'utilisateur a la possibilité de resserer le filtre sur la categorie et/ou le prix
+
+*************  etape 1 **********************************************
+
+1- l'utilisateur n'a rien sélectionné mais soumet le formulaire
+=> incidence: le résultat reste le même (simple requete par section sans critere de categorie ou prix)
+
+2- l'utilisateur ne saisie pas la catégorie mais le filtre de prix
+=> incidence: recherche de produit par genre conservé et prix <= à la somme selectionnée
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+
+3- lutilisateur saisi la categorie mais pas de filtre de prix
+=> incidence : recherche de produit par genre conservé et catégorie selectionnée et renvoie dans le formulaire 
+des sous-catégories en liens pour affiner les filtres (requete sur souscategorie ou la categorie est celle selectionnée)
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+
+
+4- l'utilisateur saisi et le prix et la categorie
+=> incidence : recherche de produit par genre conservé, prix et catégorie selectionnée et renvoie dans le formulaire 
+des sous-catégories en liens pour affiner les filtres (requete sur souscategorie ou la categorie est celle selectionnée)
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+
+------------------------------------   categorie déja selectionnée ( etape 2) --------------------------------------------
+
+5- l'utilisateur n'a rien sélectionné mais soumet le formulaire
+=> incidence: le résultat reste le même (simple requete par section sans critere de souscategorie ou prix donc on conserve simplement la categorie)
+
+6-
+l'utilisateur ne saisie pas la souscatégorie mais le filtre de prix
+=> incidence: recherche de produit par genre conservé et prix <= à la somme selectionnée
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+
+
+7-lutilisateur saisi la souscategorie mais pas de filtre de prix
+=> incidence : recherche de produit par genre conservé et souscatégorie selectionnée et renvoie dans le formulaire 
+des sous-catégories en liens pour affiner les filtres (requete sur souscategorie )
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+
+
+8- l'utilisateur saisi et le prix et la souscategorie
+=> incidence : recherche de produit par genre conservé, prix et souscatégorie selectionnée et renvoie dans le formulaire 
+des sous-catégories en liens pour affiner les filtres (requete sur souscategorie )
+=> faire transiter les infos selectionnées ou non dans des values d'input type hidden
+

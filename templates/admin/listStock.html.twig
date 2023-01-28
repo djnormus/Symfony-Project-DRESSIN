@@ -1,0 +1,59 @@
+{% extends 'panelAdmin.html.twig' %}
+
+
+{% block title %}
+{{ parent() }}Liste des produits
+{% endblock %}
+
+
+{% block titre %}
+Liste des produits
+{% endblock %}
+
+
+
+
+{% block body %}
+<form class="d-flex col-xl-4" method="post" action="{{ path('searchRef') }}">
+    <input class="form-control" type="text" name="search" placeholder="Rechercher une référence">
+    <button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
+</form>
+<div class="table-responsive text-center">
+    <table class="table-sm mt-4">
+        <thead>
+            <tr class="bg-primary text-light">
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Ref</th>
+                <th scope="col">Taille</th>
+                <th scope="col">Couleur</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for stock in stocks %}
+
+
+            <tr>
+                <th scope="row">{{ stock.product.id }}</th>
+                <td>{{ stock.product.title }}</td>
+                <td>{{ stock.product.reference }}</td>
+                <td>{{ stock.size.title }}</td>
+                <td>{{ stock.color.colorCode }}</td>
+
+                <td>{{ stock.quantity}}</td>
+                <td>
+                    <a class="btn " href="{{ path('stock', { id:stock.id  }) }}">Déclarer les stocks</a>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

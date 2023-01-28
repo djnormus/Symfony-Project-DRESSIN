@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{ parent() }} Mon compte{% endblock %}
+
+{% block titre %}
+
+Mon compte
+
+{% endblock %}
+
+
+{% block body %}
+
+
+
+<div class="container bootstrap snippets bootdey">
+    <h5 class="mb-3">Détail de mon compte</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table-responsive table-sm">
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td><strong>Nom :</strong></td>
+                                <td class="text-primary">{{user.lastName}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prénom :</strong></td>
+                                <td class="text-primary">{{user.firstName}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pseudo :</strong></td>
+                                <td class="text-primary">{{user.userName}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>E-mail :</strong></td>
+                                <td class="text-primary">{{user.email}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Téléphone :</strong></td>
+                                <td class="text-primary">{{user.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Adresse :</strong></td>
+                                <td class="text-primary">{{user.streetNumber}}, {{user.street}} - {{user.zipCode}} {{user.city}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mot de passe :</strong></td>
+                                <td class="text-primary"> <a href=" {{ path('modifPassword') }} ">Modifier mon mot de passe</a> </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gérer mon compte :</strong></td>
+                                <td class="text-primary"> <a href=" {{ path('modifProfil') }} ">Modifier mes coordonnées</a> </td>
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+{{ parent() }} Rénitialisation du mot de passe
+
+{% endblock %}
+
+{% block titre %}
+Rénitialisation du mot de passe
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container col-lg-6 pb-5">
+    <form action="{{ path('resetToken') }}" method="post">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Saisissez votre email de récupération" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded">Envoyer</button>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'panelAdmin.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+{{ titre }}
+{% endblock %}
+
+{% block titre %}
+{{ titre }}
+{% endblock %}
+
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/select2.css') }}">
+
+<div class="pb-5">
+	{{form_start(form)}}
+
+	<label for="">Titre</label>
+	{{form_row(form.title)}}
+
+	<label for="">Prix</label>
+	{{form_row(form.price)}}
+
+	<label for="">Référence</label>
+	{{form_row(form.reference)}}
+
+	<label for="">Description</label>
+	{{ form_row(form.description, { 'attr':{'placeholder':'veuillez saisir le texte'}}) }}
+
+
+	<label for="">Photo</label>
+	{{form_row(form.editPicture, {'attr': {'onChange': "loadFile(event)"} })}}
+
+	<div class="row justify-content-center">
+		{# Affichage de l'image à remplacer avec JS #}
+		<div class="col-md-5 text-center">
+			<p>Nouvelle image</p>
+			<img id="image" width="200">
+		</div>
+
+		{# Affichage de l'image actuelle "product.picture" #}
+		<div class="col-md-5 text-center">
+			<p>Image actuelle</p>
+			<img src="{{ asset('upload/') }}{{ product.picture }}" width="200">
+		</div>
+	</div>
+
+	<label for="">Marque</label>
+	{{form_row(form.brand)}}
+
+	<label for="">Catégorie</label>
+	{{form_row(form.category)}}
+
+	<label for="">Section</label>
+	{{form_row(form.gender)}}
+
+	<label for="">Fournisseur</label>
+	{{form_widget(form.suppliers)}}
+
+	<label for="">Couleur</label>
+	{{form_row(form.colors)}}
+
+	<label for="">Taille</label>
+	{{form_row(form.sizes)}}
+
+	<div class="mt-4">
+		{{form_row(form.Enregistrer)}}
+	</div>
+	{{form_end(form)}}
+</div>
+
+{# fonction js pour l'affichage de l'aperçu de l'image #}
+<script>
+
+	var loadFile = function (event) {
+		var image = document.getElementById('image');
+		image.src = URL.createObjectURL(event.target.files[0]);
+	};
+</script>
+
+<script>
+
+	var loadFile = function (event) {
+		var image = document.getElementById('image');
+
+		image.src = URL.createObjectURL(event.target.files[0]);
+	};
+</script>
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/select2.js') }}"></script>
+<script>
+	$(function () {
+		$('.select2').select2()
+
+	})
+</script>
+
+
+{% endblock %}

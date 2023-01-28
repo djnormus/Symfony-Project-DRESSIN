@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+	{{ parent() }}
+	Modifier mon profil
+{% endblock %}
+
+{% block titre %}
+Modifier mon profil
+{% endblock %}
+
+
+{% block body %}
+	
+{############### FORMULAIRE MODIFICATION #################}
+
+<div class="container col-lg-6 pb-5">
+		{{form_start(form)}}
+
+		<label for="">Nom</label>
+		{{form_row(form.lastName)}}
+
+		<label for="">Prénom</label>
+		{{form_row(form.firstName)}}
+
+		<label for="">Pseudo</label>
+		{{form_row(form.username)}}
+
+		<label for="">E-mail</label>
+		{{form_row(form.email)}}
+
+		<label for="">Numéro de téléphone</label>
+		{{form_row(form.phone)}}
+
+
+		<label for="">Numéro de la voie</label>
+		{{form_row(form.streetNumber)}}
+
+		<label for="">Nom de la voie</label>
+		{{form_row(form.street)}}
+
+		<label for="">Code postal</label>
+		{{form_row(form.zipCode)}}
+
+		<label for="">Ville</label>
+		{{form_row(form.city)}}
+
+		<div class="mt-4">
+			{{form_row(form.Enregistrer)}} 
+		</div>
+		
+		{{form_end(form)}}
+	</div>
+
+
+	
+{% endblock %}

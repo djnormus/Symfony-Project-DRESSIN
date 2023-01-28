@@ -1,0 +1,56 @@
+{% extends 'panelAdmin.html.twig' %}
+
+
+{% block title %}
+	{{ parent() }}{{ titre }}
+{% endblock %}
+
+{% block titre %}
+	{{ titre }}
+{% endblock %}
+
+
+{% block body %}
+
+
+	{{ form(form)}}
+
+
+		<div class="table-responsive mt-5">
+			<table class="table table-hover">
+				<thead>
+					<tr class="table-dark">
+						<th scope="col">#</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Sous-catégories</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for subCategory in subCategories %}
+
+						<tr>
+							<th scope="row">{{subCategory.id}}</th>
+							<td>{{ subCategory.title}}</td>
+							<td>
+								{% for category in subCategory.category %}
+								-{{ category.title}}<br>
+								{% endfor %}
+
+							</td>
+							<td>
+								<a href=" {{ path('editSubCategory', { id:subCategory.id }) }} "><img src="{{ asset('update.png') }}" alt="modifier"></a>
+								<a href=" {{ path('deleteSubCategory', { id:subCategory.id }) }} " onclick="return confirm('Etes vous sur de vouloir supprimer cette sous-categorie ?')"><img src="{{ asset('delete.png') }}" alt="supprimer"></a>
+							</td>
+						</tr>
+
+					{% endfor %}
+
+
+				</tbody>
+			</table>
+		</div>
+
+
+	{% endblock %}

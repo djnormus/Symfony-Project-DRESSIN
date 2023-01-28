@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+{{ parent() }}{{ titre }}
+{% endblock %}
+
+
+{% block titre %}
+{{ titre }}
+{% endblock %}
+
+
+{% block body %}
+
+{# CONDITION AFFICHAGE PANIER SI PAS VIDE #}
+{% if items is not empty %}
+<div class="table-responsive">
+	<table class="table ">
+		<thead>
+			<tr class="bg-primary text-center text-light">
+
+				<th scope="col">Nom</th>
+				<th scope="col">Réf</th>
+				<th scope="col">Prix</th>
+				<th scope="col">Photo</th>
+				<th scope="col">Marque</th>
+				<th scope="col">Taille</th>
+				<th scope="col">Couleur</th>
+				<th scope="col"></th>
+				<th scope="col">Qté</th>
+				<th scope="col"></th>
+				<th scope="col">Supprimer</th>
+				<th scope="col">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{% for item in items %}
+
+			<tr class="text-center">
+
+				<td>{{ item.product.title}}</td>
+				<td>{{ item.product.reference}}</td>
+				<td>{{ item.product.price | format_currency('EUR')}}</td>
+
+
+				<td>
+					<img src="{{ asset('upload/') }}{{ item.product.picture}} " width="50"
+						alt=" {{ item.product.title}} ">
+				</td>
+				<td>{{ item.product.brand}}</td>
+				<td>{{ item.size.title}}</td>
+				<td><div style="background-color:{{ item.color.colorCode }};border: 2px solid grey;width: 30px; min-height: 30px;" ></div></td>
+
+				<td>
+					<a href=" {{ path('removeCart', {'id': loop.index0 }) }} ">
+						<i class="fas fa-minus-circle fa-2x"></i>
+					</a>
+				</td>
+				<td>
+					{{ item.quantity}}
+				</td>
+				<td>
+					<a href=" {{ path('addCart', {'id': loop.index0, param:'cart' }) }} ">
+						<i class="fas fa-plus-circle fa-2x"></i>
+					</a>
+				</td>
+
+				<td>
+
+					<a href=" {{ path('deleteCart', {'id': loop.index0 }) }} "
+						onclick="return confirm('Etes vous sur de vouloir supprimer cet article ?')"><img
+							src="{{ asset('delete.png') }}" alt="supprimer"></a>
+				</td>
+				<td>
+					{{ item.product.price * item.quantity }} €
+				</td>
+			</tr>
+
+			{% endfor %}
+
+
+		</tbody>
+	</table>
+</div>
+
+	<h3>
+		Total : {% if totalRemise is defined %}
+		<span style="text-decoration: line-through">{{ total | format_currency('EUR') }}</span>
+		{% else %}
+		{{ total | format_currency('EUR') }}
+		{% endif %}€
+	</h3>
+	{% if totalRemise is defined %}
+	<h3>Après remise: {{ totalRemise | format_currency('EUR') }} €</h3>
+	{% endif %}
+
+	<a href="{{ path('destroyCart') }}" class="btn btn-danger mt-5"
+		onclick="return confirm('Etes-vous de vouloir supprimer cet article de votre panier')">Vider le panier</a>
+
+	{% if app.user %}
+
+	<a href="{{ path('order') }}" class="btn btn-warning mt-5">Passer à la commande</a>
+	{% else %}
+
+	<a href="{{ path('login') }}" class="btn btn-warning mt-5">Connectez vous pour passer à la commande</a>
+
+	{% endif %}
+	{% if affiche==true %}
+
+	<div class="col-lg-5 pb-5">
+		<form action="{{ path('verifPromo') }}" class="mt-4" method="post">
+			<div class="row mb-3">
+				<label for="inputEmail3" class=" col-form-label">Code promo</label>
+				<div>
+					<input type="text" name="code" class="form-control" placeholder="Vous avez un code promo?"
+						id="inputEmail3">
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Verifier </button>
+		</form>
+	</div>
+	{% endif %}
+
+	{% else %}
+
+	<div class="text-center">
+		<h3>Votre panier est vide, allez vite consulter notre <a class="btn btn-success rounded"
+				href="{{ path('home') }}">catalogue</a></h3>
+	</div>
+
+
+	{% endif %}
+
+
+
+
+	{% endblock %}
